@@ -3,6 +3,9 @@
  * Single Page Application Controller (Vanilla JS + LocalStorage + Google Sheets Sync)
  */
 
+// Default Deployed Google Apps Script Web App Endpoint for Mohan Traders
+const DEFAULT_GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw0kfwIfaJHrCfp2tkouZfoajizVHPmqq-qDhAzBy_LNaY4nS47-HZkXWIc9AblBnaxdg/exec';
+
 // Application State
 const state = {
   currentTab: 'overview',
@@ -17,7 +20,7 @@ const state = {
   currentShopId: '',
   syncStatus: 'idle', // 'idle' | 'syncing' | 'online' | 'offline' | 'error'
   settings: {
-    googleSheetUrl: '',
+    googleSheetUrl: DEFAULT_GOOGLE_SHEET_URL,
     shopName: 'Mohan Traders',
     phone: '9677353982',
     address: 'Wholesale Beverage & FMCG Distribution, Tollgate / Samayapuram',
@@ -39,6 +42,23 @@ function initApp() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+
+  // Automatically fetch latest live data from Google Sheet on startup
+  autoSyncFromSheet(true);
+
+  // Background auto-refresh every 30 seconds for all users & devices
+  setInterval(() => {
+    if (document.visibilityState === 'visible') {
+      autoSyncFromSheet(true);
+    }
+  }, 30000);
+
+  // Automatically refresh when switching back to tab or unlocking mobile screen
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      autoSyncFromSheet(true);
+    }
+  });
 }
 
 // Load state from localStorage or seedData
@@ -57,6 +77,11 @@ function loadFromStorage() {
     }
   } catch (err) {
     console.error('Failed to parse local storage:', err);
+  }
+
+  // Ensure default Google Sheet Web App URL is always active
+  if (!state.settings.googleSheetUrl || !state.settings.googleSheetUrl.trim()) {
+    state.settings.googleSheetUrl = DEFAULT_GOOGLE_SHEET_URL;
   }
 
   // Fallback to seedData if empty
@@ -1972,7 +1997,7 @@ async function saveAndTestConnection() {
 }
 
 async function syncWithGoogleSheet(payload) {
-  const url = state.settings.googleSheetUrl;
+  const url = state.settings.googleSheetUrl || DEFAULT_GOOGLE_SHEET_URL;
   if (!url) return;
 
   try {
@@ -1991,6 +2016,11 @@ async function syncWithGoogleSheet(payload) {
     state.settings.lastSync = new Date().toISOString();
     saveToStorage();
     updateSyncStatusBadge();
+
+    // Re-sync after 2 seconds to ensure formulas and remote rows are synced
+    setTimeout(() => {
+      autoSyncFromSheet(true);
+    }, 2000);
   } catch (err) {
     console.error('Google Sheet push error:', err);
     state.syncStatus = 'offline';
@@ -1998,12 +2028,9 @@ async function syncWithGoogleSheet(payload) {
   }
 }
 
-async function syncAllFromSheet() {
-  const url = state.settings.googleSheetUrl;
-  if (!url) {
-    alert('Please configure your Google Apps Script Web App URL first.');
-    return;
-  }
+async function autoSyncFromSheet(silent = false) {
+  const url = state.settings.googleSheetUrl || DEFAULT_GOOGLE_SHEET_URL;
+  if (!url) return;
 
   state.syncStatus = 'syncing';
   updateSyncStatusBadge();
@@ -2023,16 +2050,34 @@ async function syncAllFromSheet() {
       saveToStorage();
       updateSyncStatusBadge();
       renderCurrentTab();
-      showToast('Successfully refreshed all data from Google Sheet!');
+      if (!silent) {
+        showToast('Successfully refreshed latest data from Google Sheet!');
+      }
     } else {
       throw new Error(result.message || 'Fetch failed');
     }
   } catch (err) {
-    console.error('Failed to sync from sheet:', err);
+    console.warn('Auto-sync notice:', err);
     state.syncStatus = 'offline';
     updateSyncStatusBadge();
-    alert('Error syncing from sheet. Please check your Web App URL.');
+    if (!silent) {
+      alert('Could not sync with Google Sheet. Please check internet connection.');
+    }
   }
+}
+
+async function syncAllFromSheet() {
+  await autoSyncFromSheet(false);
+}
+
+function manualRefresh() {
+  const icon = document.getElementById('manual-refresh-icon');
+  if (icon) icon.classList.add('animate-spin');
+  autoSyncFromSheet(false).finally(() => {
+    setTimeout(() => {
+      if (icon) icon.classList.remove('animate-spin');
+    }, 800);
+  });
 }
 
 function pushAllToSheet() {

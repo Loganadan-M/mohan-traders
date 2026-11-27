@@ -1,4 +1,4 @@
-﻿# 🏪 Mohan Traders - Shop & Inventory Management System
+# 🏪 Mohan Traders - Shop & Inventory Management System
 
 A fast, lightweight, and zero-cost Single-Page Web Application designed specifically for **Mohan Traders** to manage wholesale beverage & FMCG distribution across delivery routes.
 

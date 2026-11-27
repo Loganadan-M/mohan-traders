@@ -58,7 +58,9 @@ function doPost(e) {
     var action = data.action;
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
-    if (action === 'ADD_PRODUCT') {
+    if (action === 'PING') {
+      output = { status: 'success', message: 'POST to Mohan Traders Sheet succeeded!' };
+    } else if (action === 'ADD_PRODUCT') {
       output = addProduct(ss, data.product);
     } else if (action === 'UPDATE_PRODUCT_PRICE') {
       output = updateProductPrice(ss, data.productId, data.name, data.rate);
