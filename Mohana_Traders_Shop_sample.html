@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohana Traders – Shop Tally</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#eef3ee;--card:#fff;--ink:#16231a;--mute:#5d6f62;--line:#d5ded6;--acc:#2b7a4b;--accink:#fff;--warn:#b4540a;--hi:#e3f2e7;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a15;--card:#1b2620;--ink:#e6efe8;--mute:#93a59a;--line:#2d3b33;--acc:#5cc489;--accink:#08150d;--warn:#f0a35e;--hi:#203a2b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a15;--card:#1b2620;--ink:#e6efe8;--mute:#93a59a;--line:#2d3b33;--acc:#5cc489;--accink:#08150d;--warn:#f0a35e;--hi:#203a2b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px}
+header{padding:16px 0 8px}
+h1{margin:0;font-size:22px;letter-spacing:-.01em}
+header p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.tabs{display:flex;gap:6px;margin:10px 0;overflow-x:auto}.tab{white-space:nowrap}
+button{font:inherit;color:inherit;cursor:pointer}
+.tab,.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;min-height:40px}
+.tab[aria-pressed=true],.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--accink);font-weight:600}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.chip{white-space:nowrap;padding:6px 12px;min-height:36px;font-size:14px}
+input[type=search],input[type=number],input[type=text],select,textarea{width:100%;font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;min-height:44px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px;min-height:50px;width:100%}
+.row small,.pn span,.mute{color:var(--mute);font-size:13px}
+.row .amt{font-weight:700;color:var(--acc);white-space:nowrap}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.top h2{margin:0;font-size:19px}
+.back{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;min-height:40px}
+.cat{margin:16px 2px 6px;font-weight:700;font-size:15px;color:var(--mute)}
+.p{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:6px}
+.p.on{background:var(--hi);border-color:var(--acc)}
+.pn{display:flex;flex-direction:column;min-width:0}
+.pn b{font-weight:600;overflow-wrap:anywhere}
+.st{display:flex;align-items:center;gap:4px;flex:none}
+.st button{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:22px;line-height:1}
+.st button[data-act=inc]{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+.st input{width:52px;text-align:center;padding:8px 2px;min-height:44px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.grid label{font-size:13px;color:var(--mute);display:block;margin-bottom:3px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar div{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.bar b{font-size:20px}
+.neg{color:var(--warn)}
+.btn{background:var(--acc);color:var(--accink);border:0;border-radius:10px;padding:10px 16px;min-height:44px;font-weight:600}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+.kpis div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpis b{display:block;font-size:20px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{color:var(--mute);font-weight:600}
+.card>*+*{margin-top:8px}details summary{cursor:pointer;font-weight:600;min-height:32px}textarea{font:12px/1.3 ui-monospace,monospace}.empty{padding:22px 8px;text-align:center;color:var(--mute)}
+</style></head>
+<body><div class="wrap">
+<header><h1>Mohana Traders</h1><p>Pick a shop, tap the products it took, and the total adds up by itself.</p></header>
+<div class="tabs" role="group" aria-label="View"><button class="tab" data-act="tab" data-v="shops">Shop billing</button><button class="tab" data-act="tab" data-v="taken">Daily taken</button><button class="tab" data-act="tab" data-v="sum">Summary</button><button class="tab" data-act="tab" data-v="manage">Manage</button></div>
+<main id="app"></main></div>
+<div class="bar" id="bar" hidden><div></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const R=n=>'₹'+(Math.round(n*100)/100).toLocaleString('en-IN');
+const AREAS=['Tolgate','Samayapuram','Manachanallur'];
+const RAW=[`SRI BALAJI BHAVAN|RENGAN|GUNA TEA|ROYAL TEA|SRI VALAMBIGAI TEA|SRM TEA|VENGADESA BAKERY|MANI COFFEE|GRACE TEA|JOHN TEA|PNR|ANITHA BAKERY|ANAND TEA|SVM ARASAN COFFEE CAFÉ|SIVA TEA|LOKII CAFÉ|MARIS CAFÉ|VELU TEA SPOT|SRI PALANIANDAVAR BAKERY(AKILA)|EAGANATHAN|SRI SASTHA KITCHEN|ELANGO TEA|BALU-TALAKUDI|AAVIN( TLG)|SHAMUGA SWEETS CAKES|SHANMUGA TEA(TLG)|MADHURA TEA|CHENNAI BAKERY(TLG)|VENILLA(TLG)|VASAVI TEA|SRI LAKSHMI BAKERY(TLG)|SRI MAHALAKSHMI-2(TLG)|AMMAN TEA|SRI COFFEE BAR -2|LATHA TEA|GOPAL (TLG) TEA|DM COFFEE PARK|SRI KARPAGAVINAYAGA TEA|SRI SAI CAFÉ|SUGAM HOSPITAL|SRI PALANIANDAVAR BAKERY(N)|SRI NAGANATHAR (N)|S.M.NAIDU BAKERY|MANO BACKERY|KELVIN TEA|SRI AMBAL TEA (NO)|MANO RESTURENT|CAKE&JOYS BAKERY|PALANIANDAVAR BAKERY(M)|SIVA TEA|BAWA KUMAR|IYER CAFÉ|BALU TEA|PADMA HOTEL|THANGARAJ|SRI NAGA(DURAI)|GANESH|KANDASAMY TEA|SENDAMARAI|JEYARAMAN|SRI KUMARS CAFÉ|SRI ELLUMALAIYAN TEA|APPA CAPE|SELVAKUMAR|SKS|PRIYA|RAMAJAYAM TEA|GAYATHRI(H)|MANI (2)|MANI(BHU)|BALA CAFÉ|SIRGUNABALAN|GURU TEA|NALINI TEA|PANDIAN|SRI VINAYAGA TEA|MOORTHY|T.SARAVANAN|SATHIYA TEA|SRI AMBAL CAFÉ(SR)|TVK HOTEL&TEA|R.R. TEA|SEKAR TEA|KS BIRIYANI|SRI SIVAM HOTEL|BHARANI TEA|SRI GANAPATHY TEA|SRI BALAMURUGAN|SIVALINGA COFFEE|RAGAVENDRA TEA|GANESH TEA&COFFEE|NIKI AKILA BAKERY|SKM|AAVIN(MAN)|SP|MCH(N)|MCH(MAN)|HONEY BEE BAKERY|NAGARAJ TEA|CHOTA BEEM|VETTRIVEL BAKERY|SUNDAKAN TEA|SRI VINAYAGA TEA(NOC)|ANJAPPER RESTURANT|SENDHOR RESTURANT|BALA CAFÉ(SR)|UDHAYAM TEA|ARASAN BAKERY|BALA CAFÉ(DR)`,
+`MAGILVIDMAGIL|SIVA TEA|MADURA COFFEE BAR|GOLDEN RATIO|SRI AMMAN TEA (PALUR)|ABR KAMACTHI BHAVAN|YATHIRA CAFÉ|SAIRAM TEA|AASAI|SRI AMMAN BAKERY|RAVI NIVAS|SRI NAGA(F)(753)|PANDIAN BEEDA STALL|KALAI TEA|RAJA KARUPATTI KAAPE|OVIYA SRI|SRI NAGANATHAR(KV)|MVS IYER CAFÉ|NAMMA KUMBAKONAM CAFÉ|SRI BHAVATHI|BISMILLAH TEA|SRI PALANIAPPAN|SRI NAGANATHAR-SANDAI(L)|BALA TEA (SAM)|SRI KUMARAN TEA|SRI SURIYA CAFÉ|JAI SANJANA|TRICHY COFFEE|SRI MAYURA CAFÉ|SRI AMBAL CAFÉ|ADHITHIYA|SRI AMMAN TEA(BYE PASS)|SRI AATHIYA|HARAN TEA|AMK|SRI NEELEAMMAN|THAMBU TEA|AM UNAVAHAM|DHURV CAFÉ|MURUGAN CAFÉ|BUHARI RESTAURANT|F2F BAKERY|AAKASH TEA|REDDIYAR TEA|VASATHAM BAKERY|FAMOUS BAKERY|RK TEA|AKA BAKERY|DHANALAKSHMI COLLEGE|HIGHWAY NEST|THENDRAL TEA|SRI VINAYAGA TEA|A1-ANARK|SRI KANNATHAL TEA|JUICE LAND|RATHESH TEA|RAMAKRISHNA CANTEEN|PALANIYADAVAR TEA|MARUTHI CEMENT CANTEEN|ARN TEA|SELVAM TEA|SRI NAGANATHAR(DEEVALI)|P V|T.PETTAI|SRM-FOOD NEEDS(sample)|SRI NAGAMMAL TEA(MANI)|SRI AMMAN (KADAI VEEDI)|CLASSIC CAKES|SRI NAGANATHAR (TOLL)|KKR TEA|LONDON TEA|VASATHAM HOTEL(K)|SRI BALAJI BHAVAN|LUCKY BAKERS|NSR TEA|NEW SRI SELVA VINAYAGA|NVR TEA|DIVIYA TEA|NEW NSR CAFÉ|SRI RANGAM CAFÉ|JANU CAFÉ CLUB|SRI TEA|SIVAM COFFEE CLUB|NVS HOTEL|ARUN BAKERY`,
+`KAMARAJ TEA|RAMASAMY|SRI MATHI|SATHIYA|MARUTHAI(IYY)|MANI (1)|RENGASAMY (IYY)|GOVINDARAJ (IYY)|CIVI BAKERY|SRI VELAN BAKERY|SURESH TEA|ANNAMALAIYAR|RAJAGOPAL|SRI RENGA RESTURANT(848)|CHENAIYAN TEA|RAJKUMAR TEA|SANMUGA|SOMU`];
+let shops=[];RAW.forEach((t,a)=>t.split('|').forEach(n=>shops.push({id:shops.length,n,a})));
+const CATS={H:'Health drinks',T:'Tea',C:'Coffee',M:'Milk drinks',O:'Other'};
+let P=`200GM BOOST(B)~114.81~H|200GM HORLICKS(B)~114.81~H|3ROSE~620~T|A B C MALT-200G~75~H|BADAM MILK-200GM~75~M|BADAM MILK-500GM~180~M|BADAM-6/~4.4~O|BOOST BOOTLE~276.85~H|BOOST-10/~8.9~H|BOOST-5/~4.584~H|BOOST-500GM (p)~221.3~H|BRU (6*200)~187.5~C|BRU 2RS~1.8185~C|BRU 500GM~1390~C|COLD COFFEE~37.3~C|COTTON MILK 200G~75~M|COTTON MILK 500G~180~M|GINGER -200g TEA~75~T|GINGER -500g TEA~180~T|GREEN LABEL~737.25~T|HOL(BIS)RS 25/-~21.43~O|HOL(BIS)RS10~8.58~O|HORLICKS BOOTLE~272.23~H|HORLICKS-10/~8.9~H|HORLICKS-5/~4.585~H|HORLICKS-500GM~217.59~H|JAM 200 GM~78~O|JAM 90 GM~22.94~O|LEMON-200G~55~T|LIPTON 100,S~50.568~T|LIPTON 25,S~156.52~T|NS 500GM~35~O|PALM CANDY 1KG~275~O|PALM CANDY 250G~95~O|PEPER MILK 200GM~75~M|RAGI MALT-200G~58~H|RAGI MALT-500G~140~H|RED LABEL~345~T|RED LABEL (KB)~225~T|ROSE MILK 200G~60~M|RUBY~275.7~T|SUKKU 200G~75~O|SUKKU RS 6/-~4.32~O|SUKKU500G~180~O|SUPER DUST~325~T|TAAZA~266.35~T|TAJ 2 KG~515~T|TAJ 500 GM~842~T|TAJ TEA BAG(100*2)~283~T|TOPSTAR~620~T|TRIPTI( 6*200)~158.33~C|TZ GOLD 2KG~260~T`.split('|').map((t,i)=>{const[n,r,c]=t.split('~');return{id:i,n,r:+r,c}});
+const K='mohana-tally-v1';let D={e:{}};
+try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.e)D=s}catch(e){}
+D.t=D.t||{};const save=()=>{try{localStorage.setItem(K,JSON.stringify(D))}catch(e){}};
+const ent=id=>D.e[id]||(D.e[id]={q:{},g:0,r:0,p:0});
+const qtyOf=e=>Object.values(e.q).reduce((a,b)=>a+b,0);
+const totOf=e=>P.reduce((a,p)=>a+(e.q[p.id]||0)*p.r,0);
+const balOf=e=>(e.p||0)+totOf(e)-(e.g||0)-(e.r||0);
+let V={tab:'shops',cur:null,area:-1,q:'',pq:'',wipe:false};
+function shell(){
+ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===V.tab));
+ const a=$('#app');$('#bar').hidden=true;
+ if(V.tab==='sum')return sum(a);
+ if(V.tab==='taken')return taken(a);
+ if(V.tab==='manage')return manage(a);
+ if(V.cur===null){
+  a.innerHTML=`<div class="chips" role="group" aria-label="Area">${['All areas',...AREAS].map((x,i)=>`<button class="chip" data-act="area" data-a="${i-1}" aria-pressed="${V.area===i-1}">${x}</button>`).join('')}</div>
+  <div style="margin-top:8px"><input type="search" id="q" placeholder="Search shop name" value="${esc(V.q)}" aria-label="Search shop"></div><div class="list" id="list"></div>`;
+  $('#q').oninput=e=>{V.q=e.target.value;shopList()};shopList();
+ }else bill(a);
+}
+function shopList(){
+ const q=V.q.trim().toLowerCase();
+ const L=shops.filter(s=>(V.area<0||s.a===V.area)&&s.n.toLowerCase().includes(q));
+ $('#list').innerHTML=L.length?L.map(s=>{const e=D.e[s.id],t=e?totOf(e):0;return `<button class="row" data-act="open" data-id="${s.id}"><span>${esc(s.n)}<br><small>${AREAS[s.a]}</small></span>${t>0?`<span class="amt">${R(t)}</span>`:''}</button>`}).join(''):'<div class="empty">No shop matches that name.</div>';
+}
+function bill(a){
+ const s=SH(V.cur),e=ent(s.id);
+ a.innerHTML=`<div class="top"><div><h2>${esc(s.n)}</h2><span class="mute">${AREAS[s.a]}</span></div><button class="back" data-act="back">Change shop</button></div>
+ <div style="margin-top:10px"><input type="search" id="pq" placeholder="Search product" value="${esc(V.pq)}" aria-label="Search product"></div>
+ <div id="plist"></div>
+ <div class="card"><div class="grid">
+  <div><label for="f-p">Previous balance</label><input type="number" inputmode="decimal" id="f-p" data-f="p" value="${e.p||''}" placeholder="0"></div>
+  <div><label for="f-g">Amount given</label><input type="number" inputmode="decimal" id="f-g" data-f="g" value="${e.g||''}" placeholder="0"></div>
+  <div><label for="f-r">Return</label><input type="number" inputmode="decimal" id="f-r" data-f="r" value="${e.r||''}" placeholder="0"></div></div></div>
+ <button class="btn alt" data-act="clear">Clear this shop</button>`;
+ $('#pq').oninput=x=>{V.pq=x.target.value;prods()};prods();bar();
+}
+function prods(){
+ const e=ent(SH(V.cur).id),q=V.pq.trim().toLowerCase();let h='';
+ Object.keys(CATS).forEach(c=>{
+  const L=P.filter(p=>p.c===c&&p.n.toLowerCase().includes(q));if(!L.length)return;
+  h+=`<div class="cat">${CATS[c]}</div>`+L.map(p=>{const n=e.q[p.id]||0;return `<div class="p ${n?'on':''}"><div class="pn"><b>${esc(p.n)}</b><span>${R(p.r)} each${n?` · ${R(n*p.r)}`:''}${D.t[p.id]?` · left ${D.t[p.id]-sold(p.id)}`:''}</span></div><div class="st"><button data-act="dec" data-p="${p.id}" aria-label="Less ${esc(p.n)}">−</button><input type="number" inputmode="numeric" min="0" data-p="${p.id}" value="${n||''}" placeholder="0" aria-label="Quantity ${esc(p.n)}"><button data-act="inc" data-p="${p.id}" aria-label="More ${esc(p.n)}">+</button></div></div>`}).join('');
+ });
+ $('#plist').innerHTML=h||'<div class="empty">No product matches that name.</div>';
+}
+function bar(){
+ const e=ent(SH(V.cur).id),b=balOf(e);$('#bar').hidden=false;
+ $('#bar div').innerHTML=`<span><span class="mute">${qtyOf(e)} items</span><br><b>${R(totOf(e))}</b></span><span style="text-align:right"><span class="mute">Balance due</span><br><b class="${b<0?'neg':''}">${R(b)}</b></span>`;
+}
+function setQ(pid,n){const e=ent(SH(V.cur).id);n=Math.max(0,Math.floor(+n||0));if(n)e.q[pid]=n;else delete e.q[pid];save();prods();bar()}
+function sold(id){return Object.values(D.e).reduce((a,e)=>a+(e.q[id]||0),0)}
+function setT(id,v){v=Math.max(0,Math.floor(+v||0));if(v)D.t[id]=v;else delete D.t[id];save();const s=sold(id),r=v-s,c=$('#rt-'+id);c.textContent=(v||s)?r:'';c.className=r<0?'neg':'';$('#tkv').textContent=R(P.reduce((a,p)=>a+(D.t[p.id]||0)*p.r,0))}
+function taken(a){
+ let tk=0,sp=0;
+ const rows=P.map(p=>{const t=D.t[p.id]||0,s=sold(p.id);tk+=t*p.r;sp+=s*p.r;return{p,t,s}});
+ a.innerHTML=`<p class="mute">Enter how many of each product you loaded today. Sales fill in from the shop tallies, and Return is what should come back.</p><div class="kpis"><div><span class="mute">Taken value</span><b id="tkv">${R(tk)}</b></div><div><span class="mute">Sales value</span><b>${R(sp)}</b></div></div><div class="card scroll"><table><tr><th>Product</th><th>Taken</th><th>Sales</th><th>Return</th><th>Sales price</th></tr>${rows.map(x=>{const r=x.t-x.s;return `<tr><td>${esc(x.p.n)}<br><span class="mute">${R(x.p.r)}</span></td><td><input type="number" inputmode="numeric" min="0" data-t="${x.p.id}" value="${x.t||''}" placeholder="0" style="width:64px;text-align:center" aria-label="Taken ${esc(x.p.n)}"></td><td>${x.s}</td><td id="rt-${x.p.id}" class="${r<0?'neg':''}">${x.t||x.s?r:''}</td><td>${R(x.s*x.p.r)}</td></tr>`}).join('')}</table></div><p class="mute">A red Return means shops took more than you loaded.</p>`;
+}
+function sum(a){
+ const rows=shops.filter(s=>{const e=D.e[s.id];return e&&(qtyOf(e)||e.g||e.p||e.r)});
+ let sales=0,qty=0,due=0;rows.forEach(s=>{const e=D.e[s.id];sales+=totOf(e);qty+=qtyOf(e);due+=balOf(e)});
+ const pt=P.map(p=>{let n=0;rows.forEach(s=>n+=D.e[s.id].q[p.id]||0);return{p,n}}).filter(x=>x.n).sort((x,y)=>y.n*y.p.r-x.n*x.p.r);
+ a.innerHTML=`<div class="kpis"><div><span class="mute">Shops billed</span><b>${rows.filter(s=>qtyOf(D.e[s.id])).length}</b></div><div><span class="mute">Items sold</span><b>${qty}</b></div><div><span class="mute">Total sales</span><b>${R(sales)}</b></div><div><span class="mute">Balance due</span><b>${R(due)}</b></div></div>`+
+ (rows.length?`<div class="card scroll"><b>By shop</b><table><tr><th>Shop</th><th>Qty</th><th>Sales</th><th>Given</th><th>Balance</th></tr>${rows.map(s=>{const e=D.e[s.id];return `<tr><td>${esc(s.n)}</td><td>${qtyOf(e)}</td><td>${R(totOf(e))}</td><td>${R(e.g||0)}</td><td>${R(balOf(e))}</td></tr>`}).join('')}</table></div>
+ <div class="card scroll"><b>By product</b><table><tr><th>Product</th><th>Qty</th><th>Amount</th></tr>${pt.map(x=>`<tr><td>${esc(x.p.n)}</td><td>${x.n}</td><td>${R(x.n*x.p.r)}</td></tr>`).join('')}</table></div>
+ <div class="top"><button class="btn" data-act="copy">Copy summary</button><button class="btn alt" data-act="wipe">${V.wipe?'Tap again to erase everything':'Start a new day'}</button></div><p class="mute" id="msg" role="status"></p>`:'<div class="empty">Nothing tallied yet. Open Shop billing and add products to a shop.</div>');
+}
+function txt(){
+ const rows=shops.filter(s=>{const e=D.e[s.id];return e&&qtyOf(e)});let t='Mohana Traders – daily tally\n';let sum=0;
+ rows.forEach(s=>{const e=D.e[s.id],v=totOf(e);sum+=v;t+=`${s.n}: ${qtyOf(e)} items, ${R(v)}\n`});
+ return t+`Total: ${R(sum)}`;
+}
+document.addEventListener('click',ev=>{
+ const b=ev.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+ if(a==='tab'){V.tab=b.dataset.v;V.wipe=false;shell()}
+ else if(a==='area'){V.area=+b.dataset.a;shell()}
+ else if(a==='open'){V.cur=+b.dataset.id;V.pq='';shell();scrollTo(0,0)}
+ else if(a==='back'){V.cur=null;shell()}
+ else if(a==='inc'||a==='dec'){const e=ent(SH(V.cur).id),p=+b.dataset.p;setQ(p,(e.q[p]||0)+(a==='inc'?1:-1))}
+ else if(a==='clear'){const id=SH(V.cur).id;delete D.e[id];save();shell()}
+ else if(a==='wipe'){if(V.wipe){D={e:{},t:{}};save();V.wipe=false}else V.wipe=true;shell()}
+ else if(a==='copy'){const t=txt(),m=$('#msg');
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>m.textContent='Summary copied. Paste it in WhatsApp.').catch(()=>m.textContent=t)}
+});
+document.addEventListener('change',ev=>{
+ const i=ev.target;if(i.dataset.t!==undefined)setT(+i.dataset.t,i.value);
+ else if(i.dataset.p!==undefined&&i.tagName==='INPUT')setQ(+i.dataset.p,i.value);
+ else if(i.dataset.f){const e=ent(SH(V.cur).id);e[i.dataset.f]=+i.value||0;save();bar()}
+});
+const GS=`const SHEETS={'App Shops':['id','name','area'],'App Products':['id','name','rate','category']};
+function tab_(n){var ss=SpreadsheetApp.getActive(),s=ss.getSheetByName(n);if(!s){s=ss.insertSheet(n);s.getRange(1,1,1,SHEETS[n].length).setValues([SHEETS[n]])}return s}
+function read_(n){var v=tab_(n).getDataRange().getValues();v.shift();return v.filter(function(r){return String(r[1]).trim()!==''})}
+function write_(n,rows){var s=tab_(n),h=SHEETS[n];s.clearContents();s.getRange(1,1,1,h.length).setValues([h]);if(rows.length)s.getRange(2,1,rows.length,h.length).setValues(rows)}
+function out_(o){return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON)}
+function doGet(){return out_({shops:read_('App Shops'),products:read_('App Products')})}
+function doPost(e){var d=JSON.parse(e.postData.contents);write_('App Shops',d.shops);write_('App Products',d.products);return out_({ok:true})}`;
+const SH=id=>shops.find(s=>s.id===id);
+const CK='mohana-catalog-v1';let CU='',dirty=false,ST='Not connected to a Google Sheet yet. Changes are saved on this device.';
+const aIdx=n=>{n=String(n||'').trim()||AREAS[0];let i=AREAS.indexOf(n);if(i<0){AREAS.push(n);i=AREAS.length-1}return i};
+const cIdx=n=>Object.keys(CATS).find(k=>CATS[k]===String(n).trim())||'O';
+const gid=v=>v===''||v==null||isNaN(+v)?null:+v;
+const nid=L=>L.reduce((m,x)=>Math.max(m,x.id),-1)+1;
+const fix=L=>{let m=L.reduce((x,o)=>o.id==null?x:Math.max(x,o.id),-1),c=false;L.forEach(o=>{if(o.id==null){o.id=++m;c=true}});return c};
+function setCat(d){
+ const ss=d.shops.map(r=>({id:gid(r[0]),n:String(r[1]).trim(),a:aIdx(r[2])}));
+ const pp=d.products.map(r=>({id:gid(r[0]),n:String(r[1]).trim(),r:+r[2]||0,c:cIdx(r[3])}));
+ const ch=fix(ss)|fix(pp);shops=ss;P=pp;return ch}
+const pack=()=>({shops:shops.map(s=>[s.id,s.n,AREAS[s.a]]),products:P.map(p=>[p.id,p.n,p.r,CATS[p.c]])});
+function saveCat(){try{localStorage.setItem(CK,JSON.stringify({...pack(),url:CU,dirty}))}catch(e){}}
+function loadCat(){try{const d=JSON.parse(localStorage.getItem(CK));if(d){CU=d.url||'';dirty=!!d.dirty;if(d.shops&&d.shops.length)setCat(d)}}catch(e){}}
+const stSet=t=>{ST=t;const e=$('#sst');if(e)e.textContent=t};
+const now=()=>new Date().toLocaleTimeString();
+let pt;const push=(w=800)=>{clearTimeout(pt);dirty=true;saveCat();pt=setTimeout(doPush,w)};
+async function doPush(){
+ if(!CU)return;stSet('Saving to Google Sheet…');
+ try{const r=await fetch(CU,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(pack())});const j=await r.json();if(!j.ok)throw 0;dirty=false;saveCat();stSet('Saved to Google Sheet at '+now())}
+ catch(e){stSet('Not saved to the sheet yet. It will retry automatically.')}}
+async function pull(){
+ if(!CU){stSet('Paste your Google Sheet web app link first.');return}
+ if(dirty)return doPush();
+ stSet('Syncing…');
+ try{const d=await(await fetch(CU+(CU.includes('?')?'&':'?')+'t='+Date.now())).json();
+  if(!d.shops||(!d.shops.length&&!d.products.length))return push(0);
+  const ch=setCat(d);if(V.cur!==null&&!SH(V.cur))V.cur=null;saveCat();stSet('Synced with Google Sheet at '+now());
+  if(ch)push();
+  if(!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))shell();
+ }catch(e){stSet('Could not reach the sheet. Changes are saved here and will upload when it connects.')}}
+const co=sel=>Object.keys(CATS).map(k=>`<option value="${k}"${k===sel?' selected':''}>${CATS[k]}</option>`).join('');
+const opts=(L,sel)=>L.map((x,i)=>`<option value="${i}"${i===sel?' selected':''}>${esc(x)}</option>`).join('');
+function manage(a){
+ a.innerHTML=`<div class="card"><b>Google Sheet link</b><p class="mute" id="sst" role="status">${esc(ST)}</p>
+ <input type="text" id="su" placeholder="Paste the web app link here" value="${esc(CU)}" aria-label="Web app link">
+ <div class="top"><button class="btn" data-act="saveurl">Save &amp; sync</button><button class="btn alt" data-act="sync">Sync now</button></div>
+ <details><summary>How to connect (one time)</summary><ol class="mute"><li>Open your Google Sheet, then Extensions, then Apps Script.</li><li>Delete everything there, paste the script below, and Save.</li><li>Deploy, New deployment, type Web app. Execute as: Me. Who has access: Anyone. Deploy and allow access.</li><li>Copy the Web app URL, paste it above, tap Save &amp; sync.</li></ol>
+ <textarea id="gs" rows="6" readonly aria-label="Script to paste">${esc(GS)}</textarea><button class="btn alt" data-act="copyjs">Copy script</button></details></div>
+ <div class="chips" style="margin-top:10px"><button class="chip" data-act="msub" data-v="shops">Shops</button><button class="chip" data-act="msub" data-v="prods">Products &amp; prices</button></div><div id="mbody"></div>`;
+ mbody();
+}
+function mbody(){
+ const m=V.m||'shops',b=$('#mbody');
+ document.querySelectorAll('[data-act=msub]').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===m));
+ b.innerHTML=(m==='shops'?`<div class="card"><b>Add a shop</b><input type="text" id="ns" placeholder="Shop name" aria-label="New shop name"><select id="na" aria-label="Area">${opts(AREAS,0)}</select><button class="btn" data-act="addshop">Add shop</button></div>`
+ :`<div class="card"><b>Add a product</b><input type="text" id="nn" placeholder="Product name" aria-label="New product name"><input type="number" step="any" inputmode="decimal" id="nr" placeholder="Price in ₹" aria-label="Price"><select id="nc" aria-label="Category">${co('T')}</select><button class="btn" data-act="addprod">Add product</button></div><p class="mute">Change a price below. It updates billing and the Sheet right away.</p>`)
+ +`<input type="search" id="mq" placeholder="Search to edit or delete" value="${esc(V.mq||'')}" aria-label="Search"><div id="ml" class="list"></div>`;
+ $('#mq').oninput=e=>{V.mq=e.target.value;mlist()};mlist();
+}
+function mlist(){
+ const m=V.m||'shops',q=(V.mq||'').trim().toLowerCase();
+ const dl=k=>`<button class="btn alt" data-act="del" data-k="${k}">${V.del===k?'Sure?':'Delete'}</button>`;
+ const h=m==='shops'?shops.filter(s=>s.n.toLowerCase().includes(q)).map(s=>`<div class="p"><div class="pn" style="flex:1;gap:6px"><input type="text" data-sn="${s.id}" value="${esc(s.n)}" aria-label="Shop name"><select data-sa="${s.id}" aria-label="Area">${opts(AREAS,s.a)}</select></div>${dl('s'+s.id)}</div>`)
+ :P.filter(p=>p.n.toLowerCase().includes(q)).map(p=>`<div class="p"><div class="pn" style="flex:1;gap:6px"><input type="text" data-pn="${p.id}" value="${esc(p.n)}" aria-label="Product name"><div class="grid" style="grid-template-columns:1fr 1fr"><input type="number" step="any" inputmode="decimal" data-pr="${p.id}" value="${p.r}" aria-label="Price of ${esc(p.n)}"><select data-pc="${p.id}" aria-label="Category">${co(p.c)}</select></div></div>${dl('p'+p.id)}</div>`);
+ $('#ml').innerHTML=h.length?h.join(''):'<div class="empty">Nothing found.</div>';
+}
+document.addEventListener('click',ev=>{
+ const b=ev.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+ if(a==='msub'){V.m=b.dataset.v;V.mq='';V.del=null;mbody()}
+ else if(a==='saveurl'){CU=$('#su').value.trim();dirty=false;saveCat();pull()}
+ else if(a==='sync')pull();
+ else if(a==='copyjs'){const t=$('#gs');t.select();(navigator.clipboard?navigator.clipboard.writeText(GS):Promise.reject()).catch(()=>document.execCommand('copy'))}
+ else if(a==='addshop'){const n=$('#ns').value.trim();if(!n)return;shops.push({id:nid(shops),n,a:+$('#na').value});V.mq=n;push();mbody()}
+ else if(a==='addprod'){const n=$('#nn').value.trim();if(!n)return;P.push({id:nid(P),n,r:Math.max(0,+$('#nr').value||0),c:$('#nc').value});V.mq=n;push();mbody()}
+ else if(a==='del'){const k=b.dataset.k;if(V.del!==k){V.del=k;return mlist()}V.del=null;const id=+k.slice(1);
+  if(k[0]==='s'){shops=shops.filter(x=>x.id!==id);delete D.e[id]}
+  else{P=P.filter(x=>x.id!==id);delete D.t[id];Object.values(D.e).forEach(e=>delete e.q[id])}
+  save();push();mlist()}
+});
+document.addEventListener('change',ev=>{
+ const i=ev.target,d=i.dataset;let ok=1;
+ if(d.sn){const s=SH(+d.sn),v=i.value.trim();if(v)s.n=v;else i.value=s.n}
+ else if(d.sa)SH(+d.sa).a=+i.value;
+ else if(d.pn){const p=P.find(x=>x.id==d.pn),v=i.value.trim();if(v)p.n=v;else i.value=p.n}
+ else if(d.pr)P.find(x=>x.id==d.pr).r=Math.max(0,+i.value||0);
+ else if(d.pc)P.find(x=>x.id==d.pc).c=i.value;
+ else ok=0;
+ if(ok)push();
+});
+loadCat();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pull()});
+setInterval(()=>{if(!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))pull()},60000);
+shell();pull();
+</script></body></html>
