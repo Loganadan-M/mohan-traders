@@ -1,5 +1,5 @@
 /**
- * MOHAN TRADERS - GOOGLE APPS SCRIPT WEB APP API
+ * MOHANA TRADERS - GOOGLE APPS SCRIPT WEB APP API
  * 
  * Attach this script to your Google Spreadsheet:
  * 1. Open your Google Sheet (https://docs.google.com/spreadsheets/d/153Y1QbapMUz5MnoBZAN2B0qNMjlByzEp/edit)
@@ -7,11 +7,11 @@
  * 3. Delete any default code, paste this entire file, and click Save (Ctrl+S)
  * 4. Click Deploy > New deployment
  * 5. Select type: "Web app"
- * 6. Set Description: "Mohan Traders API"
+ * 6. Set Description: "Mohana Traders API"
  * 7. Set Execute as: "Me"
  * 8. Set Who has access: "Anyone"
  * 9. Click Deploy, Authorize access, and copy the "Web app URL" (ends in /exec)
- * 10. Paste the Web app URL in the Mohan Traders Dashboard under "Settings > Google Sheet Sync"
+ * 10. Paste the Web app URL in the Mohana Traders Dashboard under "Settings > Google Sheet Sync"
  */
 
 function doGet(e) {
@@ -22,7 +22,7 @@ function doGet(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
     if (action === 'PING') {
-      output = { status: 'success', message: 'Connected to Mohan Traders Google Sheet', timestamp: new Date().toISOString() };
+      output = { status: 'success', message: 'Connected to Mohana Traders Google Sheet', timestamp: new Date().toISOString() };
     } else if (action === 'GET_ALL') {
       output = {
         status: 'success',
@@ -59,7 +59,7 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
     if (action === 'PING') {
-      output = { status: 'success', message: 'POST to Mohan Traders Sheet succeeded!' };
+      output = { status: 'success', message: 'POST to Mohana Traders Sheet succeeded!' };
     } else if (action === 'ADD_PRODUCT') {
       output = addProduct(ss, data.product);
     } else if (action === 'UPDATE_PRODUCT_PRICE') {

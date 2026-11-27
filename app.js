@@ -1,9 +1,9 @@
 /**
- * MOHAN TRADERS - SHOP & INVENTORY MANAGEMENT SYSTEM
+ * MOHANA TRADERS - SHOP & INVENTORY MANAGEMENT SYSTEM
  * Single Page Application Controller (Vanilla JS + LocalStorage + Google Sheets Sync)
  */
 
-// Default Deployed Google Apps Script Web App Endpoint for Mohan Traders
+// Default Deployed Google Apps Script Web App Endpoint for Mohana Traders
 const DEFAULT_GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw0kfwIfaJHrCfp2tkouZfoajizVHPmqq-qDhAzBy_LNaY4nS47-HZkXWIc9AblBnaxdg/exec';
 
 // Application State
@@ -21,7 +21,7 @@ const state = {
   syncStatus: 'idle', // 'idle' | 'syncing' | 'online' | 'offline' | 'error'
   settings: {
     googleSheetUrl: DEFAULT_GOOGLE_SHEET_URL,
-    shopName: 'Mohan Traders',
+    shopName: 'Mohana Traders',
     phone: '9677353982',
     address: 'Wholesale Beverage & FMCG Distribution, Tollgate / Samayapuram',
     lastSync: null
@@ -83,6 +83,7 @@ function loadFromStorage() {
   if (!state.settings.googleSheetUrl || !state.settings.googleSheetUrl.trim()) {
     state.settings.googleSheetUrl = DEFAULT_GOOGLE_SHEET_URL;
   }
+  state.settings.shopName = 'Mohana Traders';
 
   // Fallback to seedData if empty
   if (!state.shops || state.shops.length === 0) {
@@ -227,7 +228,7 @@ function renderOverviewView() {
           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-200 mb-2 border border-blue-400/30">
             Wholesale Route Operations
           </span>
-          <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Mohan Traders Dashboard</h1>
+          <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Mohana Traders Dashboard</h1>
           <p class="text-slate-300 text-sm mt-1">Managing 212 customer shops, 52 products & daily vehicle dispatches across Tollgate, Samayapuram & Manachanallur.</p>
         </div>
         <div class="flex items-center gap-2">
@@ -1205,7 +1206,7 @@ function renderSettingsView() {
           <span>How to connect your Google Sheet (1-time 2-minute setup):</span>
         </h3>
         <ol class="list-decimal list-inside space-y-1.5 text-xs text-slate-600">
-          <li>Open your Google Sheet: <a href="https://docs.google.com/spreadsheets/d/153Y1QbapMUz5MnoBZAN2B0qNMjlByzEp/edit" target="_blank" class="text-blue-600 underline font-medium">Mohan Traders Sheet</a></li>
+          <li>Open your Google Sheet: <a href="https://docs.google.com/spreadsheets/d/153Y1QbapMUz5MnoBZAN2B0qNMjlByzEp/edit" target="_blank" class="text-blue-600 underline font-medium">Mohana Traders Sheet</a></li>
           <li>Click <strong>Extensions &gt; Apps Script</strong> in the top menu.</li>
           <li>Delete any existing code and copy-paste the code from <a href="file:///c:/Users/asus/Documents/Mohan%20traders%20shop/google-apps-script/Code.gs" class="text-blue-600 font-mono font-bold">google-apps-script/Code.gs</a>.</li>
           <li>Click <strong>Deploy &gt; New deployment</strong>.</li>
@@ -1348,7 +1349,7 @@ function viewReceipt(saleId) {
         <!-- Printable Bill Content -->
         <div id="printable-receipt" class="receipt-paper p-4 text-xs font-mono text-slate-800 space-y-2">
           <div class="text-center pb-2 border-b border-dashed border-slate-300">
-            <h2 class="text-base font-extrabold uppercase tracking-wide">MOHAN TRADERS</h2>
+            <h2 class="text-base font-extrabold uppercase tracking-wide">MOHANA TRADERS</h2>
             <p class="text-[10px] text-slate-600">Wholesale FMCG & Beverage Distribution</p>
             <p class="text-[10px] text-slate-500">Tollgate / Samayapuram • Ph: 9677353982</p>
           </div>
@@ -1414,7 +1415,7 @@ function viewReceipt(saleId) {
 
           <div class="text-center pt-3 text-[10px] text-slate-500 border-t border-dashed border-slate-300">
             <p>Thank you for your business!</p>
-            <p>Mohan Traders • Wholesale & Retail Delivery</p>
+            <p>Mohana Traders • Wholesale & Retail Delivery</p>
           </div>
         </div>
 
@@ -1441,7 +1442,7 @@ function shareViaWhatsApp(saleId) {
   if (!sale) return;
 
   const dateStr = new Date(sale.date).toLocaleDateString();
-  let text = `🧾 *MOHAN TRADERS - DELIVERY BILL*\n`;
+  let text = `🧾 *MOHANA TRADERS - DELIVERY BILL*\n`;
   text += `Shop: *${sale.shopName}* (${sale.area})\n`;
   text += `Bill #: ${sale.id} | Date: ${dateStr}\n`;
   text += `------------------------------------\n`;
@@ -1459,7 +1460,7 @@ function shareViaWhatsApp(saleId) {
   text += `Amount Paid: ₹${sale.amountPaid.toFixed(2)} (${sale.paymentMode || 'Cash'})\n`;
   text += `*Remaining Balance: ₹${sale.remainingBalance.toFixed(2)}*\n`;
   text += `------------------------------------\n`;
-  text += `Thank you for your business!\nMohan Traders - Ph: 9677353982`;
+  text += `Thank you for your business!\nMohana Traders - Ph: 9677353982`;
 
   const encoded = encodeURIComponent(text);
   const url = `https://api.whatsapp.com/send?text=${encoded}`;
@@ -1984,7 +1985,7 @@ async function saveAndTestConnection() {
       state.settings.lastSync = new Date().toISOString();
       saveToStorage();
       updateSyncStatusBadge();
-      showToast('Successfully connected to Mohan Traders Google Sheet!');
+      showToast('Successfully connected to Mohana Traders Google Sheet!');
     } else {
       throw new Error(data.message || 'Unknown response');
     }

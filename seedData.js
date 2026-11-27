@@ -1,5 +1,5 @@
 /**
- * Seed data extracted from Mohan Traders master spreadsheet.
+ * Seed data extracted from Mohana Traders master spreadsheet.
  * Total Shops: 212
  * Total Products: 52
  */

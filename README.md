@@ -1,9 +1,9 @@
-# 🏪 Mohan Traders - Shop & Inventory Management System
+# 🏪 Mohana Traders - Shop & Inventory Management System
 
-A fast, lightweight, and zero-cost Single-Page Web Application designed specifically for **Mohan Traders** to manage wholesale beverage & FMCG distribution across delivery routes.
+A fast, lightweight, and zero-cost Single-Page Web Application designed specifically for **Mohana Traders** to manage wholesale beverage & FMCG distribution across delivery routes.
 
 - 🌐 **Live GitHub Pages URL**: [https://loganadan-m.github.io/mohan-traders/](https://loganadan-m.github.io/mohan-traders/)
-- 📊 **Connected Google Spreadsheet**: [Mohan Traders Master Sheet](https://docs.google.com/spreadsheets/d/153Y1QbapMUz5MnoBZAN2B0qNMjlByzEp/edit?usp=sharing)
+- 📊 **Connected Google Spreadsheet**: [Mohana Traders Master Sheet](https://docs.google.com/spreadsheets/d/153Y1QbapMUz5MnoBZAN2B0qNMjlByzEp/edit?usp=sharing)
 - 💰 **Hosting & Database Cost**: **$0.00 / ₹0.00 (100% Free Forever)** via GitHub Pages & Google Sheets.
 
 ---
@@ -65,11 +65,11 @@ To enable automated two-way synchronization between your web dashboard and your 
 4. Click **Save** (Ctrl + S).
 5. Click **Deploy > New deployment** in the top right.
 6. Click the gear icon next to "Select type" and choose **Web app**.
-   - **Description**: `Mohan Traders API`
+   - **Description**: `Mohana Traders API`
    - **Execute as**: `Me`
    - **Who has access**: `Anyone` *(Crucial so the dashboard can communicate with the sheet)*
 7. Click **Deploy**, authorize permissions when prompted, and copy the **Web app URL** (ends in `/exec`).
-8. In the Mohan Traders Dashboard, go to **Google Sheet (Settings)**, paste the URL, and click **Save & Test Connection**!
+8. In the Mohana Traders Dashboard, go to **Google Sheet (Settings)**, paste the URL, and click **Save & Test Connection**!
 
 ---
 
